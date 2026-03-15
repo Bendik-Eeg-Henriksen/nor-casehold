@@ -1,0 +1,105 @@
+{
+  "splits": [
+    {
+      "split": "train",
+      "original_records": 449,
+      "dropped_records": 9,
+      "final_records": 440,
+      "dropped_details": [
+        [
+          "HR-2023-1891-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2024-1820-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2023-782-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2022-1215-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2022-1227-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2023-1391-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2022-1270-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2025-106-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2023-304-U",
+          "ankeutvalg_no_real_sammendrag"
+        ]
+      ],
+      "total_sentences": 94453,
+      "scorable_sentences": 89028,
+      "flagged_junk": 5425,
+      "junk_pct": "5.7%"
+    },
+    {
+      "split": "val",
+      "original_records": 96,
+      "dropped_records": 5,
+      "final_records": 91,
+      "dropped_details": [
+        [
+          "HR-2025-2578-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2024-1654-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2022-1239-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2024-1807-U",
+          "ankeutvalg_no_real_sammendrag"
+        ],
+        [
+          "HR-2025-1281-U",
+          "ankeutvalg_no_real_sammendrag"
+        ]
+      ],
+      "total_sentences": 20276,
+      "scorable_sentences": 19123,
+      "flagged_junk": 1153,
+      "junk_pct": "5.7%"
+    },
+    {
+      "split": "test",
+      "original_records": 97,
+      "dropped_records": 1,
+      "final_records": 96,
+      "dropped_details": [
+        [
+          "HR-2022-1032-U",
+          "ankeutvalg_no_real_sammendrag"
+        ]
+      ],
+      "total_sentences": 22076,
+      "scorable_sentences": 20692,
+      "flagged_junk": 1384,
+      "junk_pct": "6.3%"
+    }
+  ],
+  "summary": {
+    "total_original": 642,
+    "total_final": 627,
+    "total_dropped": 15
+  }
+}
