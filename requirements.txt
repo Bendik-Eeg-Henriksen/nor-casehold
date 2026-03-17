@@ -1,0 +1,8 @@
+rouge-score>=0.1.2
+datasets>=2.14.0
+numpy>=1.24.0
+
+# Dense encoder models (optional, GPU recommended)
+transformers>=4.30.0
+torch>=2.0.0
+sentence-transformers>=2.2.0

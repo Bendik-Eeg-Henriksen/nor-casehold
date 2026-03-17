@@ -1,0 +1,98 @@
+[
+  {
+    "encoder": "bm25",
+    "model_id": "BM25 (k1=1.5, b=0.75)",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 48.27,
+    "rouge2": 23.65,
+    "rougeL": 27.90,
+    "rouge1_std": 7.71,
+    "rouge2_std": 10.54,
+    "rougeL_std": 9.08
+  },
+  {
+    "encoder": "tfidf",
+    "model_id": "TF-IDF cosine similarity",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 47.93,
+    "rouge2": 23.00,
+    "rougeL": 27.15,
+    "rouge1_std": 7.80,
+    "rouge2_std": 10.26,
+    "rougeL_std": 9.09
+  },
+  {
+    "encoder": "oracle_greedy_r1",
+    "model_id": "Greedy ROUGE-1 sentence selection",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 44.64,
+    "rouge2": 16.91,
+    "rougeL": 22.36,
+    "rouge1_std": 6.31,
+    "rouge2_std": 7.91,
+    "rougeL_std": 7.11
+  },
+  {
+    "encoder": "norwegian-legal-bert",
+    "model_id": "bendik-eeg-henriksen/norwegian-legal-bert",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 41.19,
+    "rouge2": 13.44,
+    "rougeL": 19.47,
+    "rouge1_std": 6.26,
+    "rouge2_std": 6.65,
+    "rougeL_std": 5.58
+  },
+  {
+    "encoder": "nb-bert-base",
+    "model_id": "NbAiLab/nb-bert-base",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 39.21,
+    "rouge2": 12.63,
+    "rougeL": 18.69,
+    "rouge1_std": 6.14,
+    "rouge2_std": 6.14,
+    "rougeL_std": 5.09
+  },
+  {
+    "encoder": "mbert",
+    "model_id": "bert-base-multilingual-cased",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 39.26,
+    "rouge2": 12.40,
+    "rougeL": 18.33,
+    "rouge1_std": 5.98,
+    "rouge2_std": 6.02,
+    "rougeL_std": 4.98
+  },
+  {
+    "encoder": "paraphrase-multilingual-MiniLM-L12-v2",
+    "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 36.07,
+    "rouge2": 11.90,
+    "rougeL": 18.56,
+    "rouge1_std": 7.00,
+    "rouge2_std": 7.11,
+    "rougeL_std": 6.07
+  },
+  {
+    "encoder": "lead-5",
+    "model_id": "First 5 sentences",
+    "n_sentences": 5,
+    "n_documents": 96,
+    "rouge1": 20.53,
+    "rouge2": 6.86,
+    "rougeL": 11.03,
+    "rouge1_std": 7.45,
+    "rouge2_std": 5.78,
+    "rougeL_std": 5.47
+  }
+]
