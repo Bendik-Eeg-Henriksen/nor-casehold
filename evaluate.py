@@ -36,7 +36,7 @@ Repository: https://github.com/Bendik-Eeg-Henriksen/nor-casehold
 Dataset:    https://huggingface.co/datasets/bendik-eeg-henriksen/nor-casehold
 Paper:      [forthcoming]
 
-License: MIT (code), CC-BY-4.0 (dataset)
+License: Apache 2.0 (code), CC-BY-4.0 (dataset)
 """
 
 import json
@@ -84,18 +84,19 @@ except ImportError:
 
 
 # ============================================================
-# Published results (NOR-CASEHOLD v1.0, test split, top-5)
+# Published results (NOR-CASEHOLD v2, test split n=233, top-5)
 # ============================================================
 
-PUBLISHED_RESULTS_V1 = [
-    {"encoder": "BM25",                    "model_id": "BM25 (k1=1.5, b=0.75)",                                    "rouge1": 48.27, "rouge2": 23.65, "rougeL": 27.90},
-    {"encoder": "TF-IDF",                  "model_id": "TF-IDF cosine similarity",                                 "rouge1": 47.93, "rouge2": 23.00, "rougeL": 27.15},
-    {"encoder": "Oracle (greedy R-1)",      "model_id": "Greedy ROUGE-1 sentence selection",                        "rouge1": 44.64, "rouge2": 16.91, "rougeL": 22.36},
-    {"encoder": "Norwegian Legal BERT",     "model_id": "bendik-eeg-henriksen/norwegian-legal-bert",                "rouge1": 41.19, "rouge2": 13.44, "rougeL": 19.47},
-    {"encoder": "NB-BERT-base",             "model_id": "NbAiLab/nb-bert-base",                                    "rouge1": 39.21, "rouge2": 12.63, "rougeL": 18.69},
-    {"encoder": "mBERT",                    "model_id": "bert-base-multilingual-cased",                             "rouge1": 39.26, "rouge2": 12.40, "rougeL": 18.33},
-    {"encoder": "Lead-5",                   "model_id": "First 5 sentences",                                        "rouge1": 20.53, "rouge2": 6.86,  "rougeL": 11.03},
-    {"encoder": "MiniLM (multilingual ST)", "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "rouge1": 36.07, "rouge2": 11.90, "rougeL": 18.56},
+PUBLISHED_RESULTS = [
+    {"encoder": "Oracle (sequential R-1)", "model_id": "Sequential greedy ROUGE-1 sentence selection",              "rouge1": 55.87, "rouge2": 30.59, "rougeL": 34.68},
+    {"encoder": "TF-IDF",                  "model_id": "TF-IDF cosine similarity",                                 "rouge1": 47.85, "rouge2": 26.46, "rougeL": 30.99},
+    {"encoder": "BM25",                    "model_id": "BM25 (k1=1.5, b=0.75)",                                    "rouge1": 47.49, "rouge2": 26.21, "rougeL": 30.64},
+    {"encoder": "Oracle (greedy R-1)",      "model_id": "Greedy ROUGE-1 sentence selection",                        "rouge1": 42.68, "rouge2": 20.65, "rougeL": 25.30},
+    {"encoder": "Norwegian Legal BERT",     "model_id": "bendik-eeg-henriksen/norwegian-legal-bert",                "rouge1": 38.40, "rouge2": 15.97, "rougeL": 20.93},
+    {"encoder": "MiniLM (multilingual ST)", "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "rouge1": 37.47, "rouge2": 16.03, "rougeL": 21.54},
+    {"encoder": "mBERT",                    "model_id": "bert-base-multilingual-cased",                             "rouge1": 37.34, "rouge2": 15.14, "rougeL": 20.49},
+    {"encoder": "NB-BERT-base",             "model_id": "NbAiLab/nb-bert-base",                                    "rouge1": 37.28, "rouge2": 15.51, "rougeL": 20.64},
+    {"encoder": "Lead-5",                   "model_id": "First 5 sentences",                                        "rouge1": 25.07, "rouge2":  7.54, "rougeL": 13.44},
 ]
 
 # Default models for --all mode
@@ -282,6 +283,62 @@ def run_oracle(test_data, n_sentences):
     results = aggregate_results("Oracle (greedy R-1)", "Greedy ROUGE-1 sentence selection",
                                 all_r1, all_r2, all_rl, n_sentences, len(test_data))
     print_single_result("Oracle (greedy R-1)", results)
+    return results
+
+
+# ============================================================
+# Baseline: Oracle (sequential ROUGE-1 — cumulative coverage)
+# ============================================================
+
+def run_oracle_sequential(test_data, n_sentences):
+    """Sequential oracle — greedily selects sentences to maximize cumulative ROUGE-1."""
+    print(f"\n{'='*60}")
+    print(f"Evaluating: Oracle (sequential ROUGE-1 sentence selection)")
+    print(f"{'='*60}")
+
+    scorer = rouge_scorer.RougeScorer(["rouge1", "rouge2", "rougeL"], use_stemmer=False)
+    all_r1, all_r2, all_rl = [], [], []
+
+    for record in test_data:
+        sammendrag = record["sammendrag"]
+        valid = get_valid_sentences(record["sentences"])
+
+        selected = []
+        remaining = list(valid)
+
+        for _ in range(min(n_sentences, len(remaining))):
+            best_score = -1
+            best_idx = -1
+            best_item = None
+
+            for i, (idx, text) in enumerate(remaining):
+                candidate_texts = [t for _, t in selected] + [text]
+                candidate_extract = " ".join(candidate_texts)
+                s = scorer.score(sammendrag, candidate_extract)
+                r1 = s["rouge1"].fmeasure
+
+                if r1 > best_score:
+                    best_score = r1
+                    best_idx = i
+                    best_item = (idx, text)
+
+            if best_item is not None:
+                selected.append(best_item)
+                remaining.pop(best_idx)
+
+        selected.sort(key=lambda x: x[0])
+        extracted = " ".join(text for _, text in selected)
+
+        if not extracted:
+            all_r1.append(0.0); all_r2.append(0.0); all_rl.append(0.0)
+            continue
+
+        s = score_rouge(sammendrag, extracted, scorer)
+        all_r1.append(s["rouge1"]); all_r2.append(s["rouge2"]); all_rl.append(s["rougeL"])
+
+    results = aggregate_results("Oracle (sequential R-1)", "Sequential greedy ROUGE-1 sentence selection",
+                                all_r1, all_r2, all_rl, n_sentences, len(test_data))
+    print_single_result("Oracle (sequential R-1)", results)
     return results
 
 
@@ -534,12 +591,12 @@ def print_comparison_table(new_results):
     """Print new results alongside published baselines."""
     col_w = 36
     print(f"\n{'='*70}")
-    print(f"  Published benchmark results (NOR-CASEHOLD v1.0, test, top-5)")
+    print(f"  Published benchmark results (NOR-CASEHOLD v2, test n=233, top-5)")
     print(f"{'='*70}")
     print(f"  {'METHOD':<{col_w}} {'R-1':>8} {'R-2':>8} {'R-L':>8}")
     print(f"  {'-'*(col_w + 26)}")
 
-    for b in PUBLISHED_RESULTS_V1:
+    for b in PUBLISHED_RESULTS:
         if b['rouge1'] > 0:  # skip placeholder entries
             print(f"  {b['encoder']:<{col_w}} {b['rouge1']:>8.2f} {b['rouge2']:>8.2f} {b['rougeL']:>8.2f}")
 
@@ -612,6 +669,7 @@ Published baselines: https://github.com/Bendik-Eeg-Henriksen/nor-casehold
     if args.all:
         new_results.append(run_lead(test_data, args.n_sentences))
         new_results.append(run_oracle(test_data, args.n_sentences))
+        new_results.append(run_oracle_sequential(test_data, args.n_sentences))
         new_results.append(run_bm25(test_data, args.n_sentences))
         new_results.append(run_tfidf(test_data, args.n_sentences))
 
