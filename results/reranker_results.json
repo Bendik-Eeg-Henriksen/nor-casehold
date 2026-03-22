@@ -1,0 +1,50 @@
+{
+  "method": "BM25 + Legal BERT Cross-Encoder Reranker",
+  "model": "bendik-eeg-henriksen/norwegian-legal-bert",
+  "bm25_k": 20,
+  "top_n": 5,
+  "epochs": 3,
+  "lr": 2e-05,
+  "batch_size": 16,
+  "n_documents": 233,
+  "n_bootstrap": 10000,
+  "reranker": {
+    "rouge1": {
+      "mean": 42.79,
+      "ci_lower": 41.48,
+      "ci_upper": 44.08
+    },
+    "rouge2": {
+      "mean": 21.45,
+      "ci_lower": 20.17,
+      "ci_upper": 22.76
+    },
+    "rougeL": {
+      "mean": 25.77,
+      "ci_lower": 24.59,
+      "ci_upper": 26.95
+    }
+  },
+  "bm25_baseline": {
+    "rouge1_mean": 47.49
+  },
+  "comparison": {
+    "delta_r1": -4.69,
+    "p_value": 1.0,
+    "significant": "n.s."
+  },
+  "per_source": {
+    "skatteetaten_bfu": {
+      "n": 116,
+      "rouge1_mean": 39.32,
+      "rouge2_mean": 23.12,
+      "rougeL_mean": 27.51
+    },
+    "hoyesterett": {
+      "n": 117,
+      "rouge1_mean": 46.24,
+      "rouge2_mean": 19.8,
+      "rougeL_mean": 24.03
+    }
+  }
+}

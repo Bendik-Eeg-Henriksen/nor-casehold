@@ -1,0 +1,229 @@
+{
+  "config": {
+    "n_documents": 233,
+    "n_sentences": 5,
+    "n_bootstrap": 10000,
+    "ci_level": 95,
+    "seed": 42
+  },
+  "confidence_intervals": {
+    "BM25": {
+      "rouge1": {
+        "mean": 47.49,
+        "ci_lower": 46.16,
+        "ci_upper": 48.82
+      },
+      "rouge2": {
+        "mean": 26.21,
+        "ci_lower": 24.71,
+        "ci_upper": 27.75
+      },
+      "rougeL": {
+        "mean": 30.64,
+        "ci_lower": 29.19,
+        "ci_upper": 32.07
+      }
+    },
+    "TF-IDF": {
+      "rouge1": {
+        "mean": 47.85,
+        "ci_lower": 46.5,
+        "ci_upper": 49.23
+      },
+      "rouge2": {
+        "mean": 26.46,
+        "ci_lower": 24.91,
+        "ci_upper": 28.0
+      },
+      "rougeL": {
+        "mean": 30.99,
+        "ci_lower": 29.51,
+        "ci_upper": 32.56
+      }
+    },
+    "Oracle (greedy R-1)": {
+      "rouge1": {
+        "mean": 42.68,
+        "ci_lower": 41.52,
+        "ci_upper": 43.85
+      },
+      "rouge2": {
+        "mean": 20.65,
+        "ci_lower": 19.43,
+        "ci_upper": 21.94
+      },
+      "rougeL": {
+        "mean": 25.3,
+        "ci_lower": 24.17,
+        "ci_upper": 26.46
+      }
+    },
+    "Oracle (sequential R-1)": {
+      "rouge1": {
+        "mean": 55.87,
+        "ci_lower": 54.67,
+        "ci_upper": 57.12
+      },
+      "rouge2": {
+        "mean": 30.59,
+        "ci_lower": 28.76,
+        "ci_upper": 32.55
+      },
+      "rougeL": {
+        "mean": 34.68,
+        "ci_lower": 32.83,
+        "ci_upper": 36.51
+      }
+    },
+    "Lead-5": {
+      "rouge1": {
+        "mean": 25.07,
+        "ci_lower": 23.93,
+        "ci_upper": 26.21
+      },
+      "rouge2": {
+        "mean": 7.54,
+        "ci_lower": 6.75,
+        "ci_upper": 8.38
+      },
+      "rougeL": {
+        "mean": 13.44,
+        "ci_lower": 12.67,
+        "ci_upper": 14.24
+      }
+    },
+    "Norwegian Legal BERT": {
+      "rouge1": {
+        "mean": 38.4,
+        "ci_lower": 37.19,
+        "ci_upper": 39.64
+      },
+      "rouge2": {
+        "mean": 15.97,
+        "ci_lower": 14.9,
+        "ci_upper": 17.08
+      },
+      "rougeL": {
+        "mean": 20.93,
+        "ci_lower": 19.96,
+        "ci_upper": 21.99
+      }
+    },
+    "NB-BERT-base": {
+      "rouge1": {
+        "mean": 37.28,
+        "ci_lower": 36.18,
+        "ci_upper": 38.35
+      },
+      "rouge2": {
+        "mean": 15.51,
+        "ci_lower": 14.5,
+        "ci_upper": 16.53
+      },
+      "rougeL": {
+        "mean": 20.64,
+        "ci_lower": 19.74,
+        "ci_upper": 21.58
+      }
+    },
+    "mBERT": {
+      "rouge1": {
+        "mean": 37.34,
+        "ci_lower": 36.28,
+        "ci_upper": 38.41
+      },
+      "rouge2": {
+        "mean": 15.14,
+        "ci_lower": 14.16,
+        "ci_upper": 16.17
+      },
+      "rougeL": {
+        "mean": 20.49,
+        "ci_lower": 19.58,
+        "ci_upper": 21.43
+      }
+    },
+    "MiniLM (multilingual ST)": {
+      "rouge1": {
+        "mean": 37.47,
+        "ci_lower": 36.28,
+        "ci_upper": 38.73
+      },
+      "rouge2": {
+        "mean": 16.03,
+        "ci_lower": 14.83,
+        "ci_upper": 17.26
+      },
+      "rougeL": {
+        "mean": 21.54,
+        "ci_lower": 20.52,
+        "ci_upper": 22.58
+      }
+    }
+  },
+  "pairwise_tests": [
+    {
+      "method_a": "BM25",
+      "method_b": "TF-IDF",
+      "delta_r1": -0.36,
+      "p_value": 0.9705,
+      "significant": "n.s."
+    },
+    {
+      "method_a": "BM25",
+      "method_b": "Oracle (greedy R-1)",
+      "delta_r1": 4.81,
+      "p_value": 0.0,
+      "significant": "***"
+    },
+    {
+      "method_a": "BM25",
+      "method_b": "Oracle (sequential R-1)",
+      "delta_r1": -8.38,
+      "p_value": 1.0,
+      "significant": "n.s."
+    },
+    {
+      "method_a": "Oracle (sequential R-1)",
+      "method_b": "Oracle (greedy R-1)",
+      "delta_r1": 13.19,
+      "p_value": 0.0,
+      "significant": "***"
+    },
+    {
+      "method_a": "BM25",
+      "method_b": "Norwegian Legal BERT",
+      "delta_r1": 9.09,
+      "p_value": 0.0,
+      "significant": "***"
+    },
+    {
+      "method_a": "Norwegian Legal BERT",
+      "method_b": "NB-BERT-base",
+      "delta_r1": 1.12,
+      "p_value": 0.0001,
+      "significant": "***"
+    },
+    {
+      "method_a": "Norwegian Legal BERT",
+      "method_b": "mBERT",
+      "delta_r1": 1.06,
+      "p_value": 0.0011,
+      "significant": "**"
+    },
+    {
+      "method_a": "Norwegian Legal BERT",
+      "method_b": "MiniLM (multilingual ST)",
+      "delta_r1": 0.92,
+      "p_value": 0.0551,
+      "significant": "n.s."
+    },
+    {
+      "method_a": "NB-BERT-base",
+      "method_b": "mBERT",
+      "delta_r1": -0.05,
+      "p_value": 0.563,
+      "significant": "n.s."
+    }
+  ]
+}

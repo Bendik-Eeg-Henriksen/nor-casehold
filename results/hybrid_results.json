@@ -1,0 +1,34 @@
+{
+  "method": "Hybrid BM25 + norwegian-legal-bert",
+  "alpha": 0.0,
+  "model": "bendik-eeg-henriksen/norwegian-legal-bert",
+  "n_documents": 233,
+  "n_sentences": 5,
+  "results": {
+    "rouge1": {
+      "mean": 47.49,
+      "ci_lower": 46.16,
+      "ci_upper": 48.82
+    },
+    "rouge2": {
+      "mean": 26.21,
+      "ci_lower": 24.71,
+      "ci_upper": 27.75
+    },
+    "rougeL": {
+      "mean": 30.64,
+      "ci_lower": 29.19,
+      "ci_upper": 32.07
+    }
+  },
+  "per_source": {
+    "hoyesterett": {
+      "n": 117,
+      "rouge1_mean": 48.4
+    },
+    "skatteetaten_bfu": {
+      "n": 116,
+      "rouge1_mean": 46.57
+    }
+  }
+}
