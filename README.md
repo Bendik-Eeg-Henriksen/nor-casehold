@@ -1,6 +1,6 @@
 # NOR-CASEHOLD
 
-**A Legal Retrieval Benchmark for Norwegian Legal NLP**
+**A Legal Retrieval Benchmark for Norwegian Legal AI**
 
 NOR-CASEHOLD is an extractive legal retrieval benchmark built from 1,244 Norwegian legal documents — 627 Supreme Court (Høyesterett) decisions and 617 Skatteetaten bindende forhåndsuttalelser (BFU) — each paired with its official summary. To the author's knowledge, this is the first open-source legal retrieval benchmark for Norwegian.
 
