@@ -1,4 +1,4 @@
-# NOR-CASEHOLD
+# Nor-CaseHOLD
 
 **A Retrieval Benchmark for Norwegian Legal AI**
 
