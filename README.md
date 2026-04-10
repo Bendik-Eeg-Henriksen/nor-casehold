@@ -8,7 +8,7 @@ The benchmark evaluates how well retrieval models can identify the sentences in 
 
 **Companion model:** [Norwegian Legal BERT](https://huggingface.co/bendik-eeg-henriksen/norwegian-legal-bert) — the first open-source domain-adapted Norwegian legal language model.
 
-📄 **Technical Report:** [NOR-CASEHOLD: A Benchmark for Evaluating Norwegian Legal AI Systems](link-to-ssrn)
+📄 **Technical Report:** [NOR-CASEHOLD: A Benchmark for Evaluating Norwegian Legal AI Systems](https://papers.ssrn.com/abstract=6459080)
 
 ## Benchmark Results
 
